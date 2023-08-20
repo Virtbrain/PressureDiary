@@ -10,7 +10,9 @@ import UIKit
 class ViewController: UIViewController {
     let table = UITableView()
     let toolbar = UIToolbar()
+    let addButton = UIBarButtonItem()
     let model = Records()
+    let addScreen = AddViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,32 +21,36 @@ class ViewController: UIViewController {
         view.backgroundColor = .white
         model.loadRecords()
         setupView()
-        table.dataSource = self
-        table.delegate = self
-        table.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
     }
     
     private func setupView() {
-        print(model.activeRecords.count)
-        toolbar.backgroundColor = .cyan
-//        table.backgroundColor = .orange
+        addButton.target = self
+        addButton.image = UIImage(systemName: "plus")
+        addButton.action = #selector(addNewRecord)
+        navigationItem.rightBarButtonItem = addButton
         
-        [table, toolbar].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview($0)
-        }
+        table.dataSource = self
+        table.delegate = self
+        table.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        
+        table.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(table)
         
         NSLayoutConstraint.activate([
             table.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             table.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             table.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            table.bottomAnchor.constraint(equalTo: toolbar.topAnchor),
-            
-            toolbar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            toolbar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            toolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            toolbar.heightAnchor.constraint(equalToConstant: 50)
+            table.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    private func setupToolbar() {
+        toolbar.setItems([addButton], animated: false)
+        
+    }
+    
+    @objc func addNewRecord() {
+        present(addScreen, animated: true)
     }
 }
 
@@ -62,9 +68,10 @@ extension ViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
         let date = self.model.activeRecords[indexPath.row].date
         let dateString = date.prettyDate
-        let sys = self.model.activeRecords[indexPath.row].sysPressure
-        let dia = self.model.activeRecords[indexPath.row].diaPressure
-        let pulse = self.model.activeRecords[indexPath.row].pulse
+        
+        guard let sys = self.model.activeRecords[indexPath.row].sysPressure else {return cell}
+        guard let dia = self.model.activeRecords[indexPath.row].diaPressure else {return cell}
+        guard let pulse = self.model.activeRecords[indexPath.row].pulse else {return cell}
         cell.textLabel?.text = "\(dateString): \(sys)/\(dia) - \(pulse)"
         return cell
     }

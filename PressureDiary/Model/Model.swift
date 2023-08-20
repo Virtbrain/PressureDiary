@@ -8,17 +8,17 @@ import Foundation
 //MARK: - RecordProtocol
 protocol RecordProtocol {
     var date: Date {set get}
-    var sysPressure: Int {set get}
-    var diaPressure: Int {set get}
-    var pulse: Int {set get}
+    var sysPressure: Int? {set get}
+    var diaPressure: Int? {set get}
+    var pulse: Int? {set get}
     var Comment: String? {set get}
 }
 
 struct Record: RecordProtocol {
     var date: Date
-    var sysPressure: Int
-    var diaPressure: Int
-    var pulse: Int
+    var sysPressure: Int?
+    var diaPressure: Int?
+    var pulse: Int?
     var Comment: String?
 }
 

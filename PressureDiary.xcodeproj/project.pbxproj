@@ -16,6 +16,7 @@
 		14AA2E672A8F8577008DCAEE /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E662A8F8577008DCAEE /* StorageManager.swift */; };
 		14AA2E692A8FDCB9008DCAEE /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E682A8FDCB9008DCAEE /* TableViewCell.swift */; };
 		14AA2E6B2A90C4E4008DCAEE /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E6A2A90C4E4008DCAEE /* DateFormatter.swift */; };
+		14AA2E6D2A91FF84008DCAEE /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E6C2A91FF84008DCAEE /* AddViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		14AA2E662A8F8577008DCAEE /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		14AA2E682A8FDCB9008DCAEE /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		14AA2E6A2A90C4E4008DCAEE /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		14AA2E6C2A91FF84008DCAEE /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				14AA2E612A8F7D14008DCAEE /* Application */,
 				14AA2E632A8F7F28008DCAEE /* Model */,
 				14AA2E502A8F786A008DCAEE /* ViewController.swift */,
+				14AA2E6C2A91FF84008DCAEE /* AddViewController.swift */,
 				14AA2E662A8F8577008DCAEE /* StorageManager.swift */,
 				14AA2E602A8F7A2B008DCAEE /* Readme.md */,
 				14AA2E682A8FDCB9008DCAEE /* TableViewCell.swift */,
@@ -174,6 +177,7 @@
 			files = (
 				14AA2E512A8F786A008DCAEE /* ViewController.swift in Sources */,
 				14AA2E4D2A8F786A008DCAEE /* AppDelegate.swift in Sources */,
+				14AA2E6D2A91FF84008DCAEE /* AddViewController.swift in Sources */,
 				14AA2E672A8F8577008DCAEE /* StorageManager.swift in Sources */,
 				14AA2E6B2A90C4E4008DCAEE /* DateFormatter.swift in Sources */,
 				14AA2E692A8FDCB9008DCAEE /* TableViewCell.swift in Sources */,
