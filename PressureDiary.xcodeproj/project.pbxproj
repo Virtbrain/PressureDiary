@@ -17,6 +17,9 @@
 		14AA2E692A8FDCB9008DCAEE /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E682A8FDCB9008DCAEE /* TableViewCell.swift */; };
 		14AA2E6B2A90C4E4008DCAEE /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E6A2A90C4E4008DCAEE /* DateFormatter.swift */; };
 		14AA2E6D2A91FF84008DCAEE /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E6C2A91FF84008DCAEE /* AddViewController.swift */; };
+		14AA2E6F2A927E32008DCAEE /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E6E2A927E32008DCAEE /* CustomTextField.swift */; };
+		14AA2E722A928156008DCAEE /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E712A928156008DCAEE /* CustomLabel.swift */; };
+		14AA2E742A93557A008DCAEE /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E732A93557A008DCAEE /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +36,9 @@
 		14AA2E682A8FDCB9008DCAEE /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		14AA2E6A2A90C4E4008DCAEE /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		14AA2E6C2A91FF84008DCAEE /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		14AA2E6E2A927E32008DCAEE /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		14AA2E712A928156008DCAEE /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		14AA2E732A93557A008DCAEE /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,12 +71,12 @@
 		14AA2E4B2A8F786A008DCAEE /* PressureDiary */ = {
 			isa = PBXGroup;
 			children = (
+				14AA2E702A92813D008DCAEE /* UIComponents */,
 				14AA2E622A8F7D2C008DCAEE /* Resources */,
 				14AA2E612A8F7D14008DCAEE /* Application */,
 				14AA2E632A8F7F28008DCAEE /* Model */,
 				14AA2E502A8F786A008DCAEE /* ViewController.swift */,
 				14AA2E6C2A91FF84008DCAEE /* AddViewController.swift */,
-				14AA2E662A8F8577008DCAEE /* StorageManager.swift */,
 				14AA2E602A8F7A2B008DCAEE /* Readme.md */,
 				14AA2E682A8FDCB9008DCAEE /* TableViewCell.swift */,
 			);
@@ -99,10 +105,21 @@
 		14AA2E632A8F7F28008DCAEE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				14AA2E662A8F8577008DCAEE /* StorageManager.swift */,
 				14AA2E642A8F8147008DCAEE /* Model.swift */,
 				14AA2E6A2A90C4E4008DCAEE /* DateFormatter.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		14AA2E702A92813D008DCAEE /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				14AA2E6E2A927E32008DCAEE /* CustomTextField.swift */,
+				14AA2E712A928156008DCAEE /* CustomLabel.swift */,
+				14AA2E732A93557A008DCAEE /* CustomButton.swift */,
+			);
+			path = UIComponents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,11 +193,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				14AA2E512A8F786A008DCAEE /* ViewController.swift in Sources */,
+				14AA2E722A928156008DCAEE /* CustomLabel.swift in Sources */,
 				14AA2E4D2A8F786A008DCAEE /* AppDelegate.swift in Sources */,
 				14AA2E6D2A91FF84008DCAEE /* AddViewController.swift in Sources */,
 				14AA2E672A8F8577008DCAEE /* StorageManager.swift in Sources */,
 				14AA2E6B2A90C4E4008DCAEE /* DateFormatter.swift in Sources */,
 				14AA2E692A8FDCB9008DCAEE /* TableViewCell.swift in Sources */,
+				14AA2E742A93557A008DCAEE /* CustomButton.swift in Sources */,
+				14AA2E6F2A927E32008DCAEE /* CustomTextField.swift in Sources */,
 				14AA2E4F2A8F786A008DCAEE /* SceneDelegate.swift in Sources */,
 				14AA2E652A8F8147008DCAEE /* Model.swift in Sources */,
 			);
