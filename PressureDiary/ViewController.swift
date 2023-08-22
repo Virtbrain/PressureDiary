@@ -7,12 +7,16 @@
 
 import UIKit
 
+protocol AddRecordDelegate: AnyObject {
+    func addNewRecord(newRecord: Record)
+}
+
 class ViewController: UIViewController {
     let table = UITableView()
     let toolbar = UIToolbar()
     let addButton = UIBarButtonItem()
     let model = Records()
-    let addScreen = AddViewController()
+    let cellID = "TableViewCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +30,7 @@ class ViewController: UIViewController {
     private func setupView() {
         addButton.target = self
         addButton.image = UIImage(systemName: "plus")
-        addButton.action = #selector(addNewRecord)
+        addButton.action = #selector(showNewReocordScreen)
         navigationItem.rightBarButtonItem = addButton
         
         table.dataSource = self
@@ -49,7 +53,9 @@ class ViewController: UIViewController {
         
     }
     
-    @objc func addNewRecord() {
+    @objc func showNewReocordScreen() {
+        let addScreen = AddViewController()
+        addScreen.delegate = self
         present(addScreen, animated: true)
     }
 }
@@ -65,14 +71,16 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! TableViewCell
+
         let date = self.model.activeRecords[indexPath.row].date
         let dateString = date.prettyDate
         
         guard let sys = self.model.activeRecords[indexPath.row].sysPressure else {return cell}
         guard let dia = self.model.activeRecords[indexPath.row].diaPressure else {return cell}
         guard let pulse = self.model.activeRecords[indexPath.row].pulse else {return cell}
-        cell.textLabel?.text = "\(dateString): \(sys)/\(dia) - \(pulse)"
+//        cell.textLabel?.text = "\(dateString): \(sys)/\(dia) - \(pulse)"
+        cell.cellLabel.text = "\(dateString): \(sys)/\(dia) - \(pulse)"
         return cell
     }
     
@@ -81,4 +89,11 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     
+}
+
+extension ViewController: AddRecordDelegate {
+    func addNewRecord(newRecord: Record) {
+        self.model.addRecord(newRecord: newRecord)
+        self.table.reloadData()
+    }
 }

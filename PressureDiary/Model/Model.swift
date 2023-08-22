@@ -28,7 +28,7 @@ class Records {
     
     func addRecord(newRecord: RecordProtocol) {
         activeRecords.append(newRecord)
-        self.saveRecords()
+//        self.saveRecords()
     }
     
     func removeRecord(recordIndex: Int) {
@@ -36,10 +36,10 @@ class Records {
     }
     
     func loadRecords() {
-//        activeRecords = storage.array(forKey: .pressureDiaryData) as! Array<Record>
-        activeRecords = [Record(date: Date(), sysPressure: 135, diaPressure: 108, pulse: 76, Comment: "All good"),
-                         Record(date: Date(), sysPressure: 148, diaPressure: 122, pulse: 64, Comment: "Need tablets")
-        ]
+        let mock = MockData()
+//        guard let record = storage.array(forKey: .pressureDiaryData) else {return}
+//        activeRecords = record as! Array<Record>
+        activeRecords = mock.takeData()
     }
     
     func saveRecords(){

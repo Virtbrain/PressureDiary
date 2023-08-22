@@ -40,7 +40,6 @@ extension StorageManager: StorageManagerProtocol {
         store(object, key: key.rawValue)
     }
     
-    
     func array(forKey key: Keys) -> Array<Any>? {
         restore(forKey: key.rawValue) as? Array<Any>
     }

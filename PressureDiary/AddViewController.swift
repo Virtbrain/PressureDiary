@@ -9,6 +9,8 @@ import UIKit
 
 class AddViewController: UIViewController {
     
+    weak var delegate: AddRecordDelegate?
+    
     let dateLabel = CustomLabel(text: "Date and time of record:")
     let sysLabel = CustomLabel(text: "SYS Pressure of blood:")
     let diaLabel = CustomLabel(text: "DIA Pressure of blood:")
@@ -110,8 +112,10 @@ class AddViewController: UIViewController {
         guard let sysTextPressure = sysTextfield.text else {return}
         guard let diaTextPressure = diaTextField.text else {return}
         guard let pulseTextPressure = pulseTextField.text else {return}
+        
         let newRecord = Record(date: datePicker.date, sysPressure: Int(sysTextPressure), diaPressure: Int(diaTextPressure) , pulse: Int(pulseTextPressure))
         //hide modal window
+        self.delegate?.addNewRecord(newRecord: newRecord)
         dismiss(animated: true)
     }
 }
