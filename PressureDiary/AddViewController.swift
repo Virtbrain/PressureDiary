@@ -14,16 +14,19 @@ class AddViewController: UIViewController {
     let dateLabel = CustomLabel(text: "Date and time of record:")
     let sysLabel = CustomLabel(text: "SYS Pressure of blood:")
     let diaLabel = CustomLabel(text: "DIA Pressure of blood:")
-    let pulseLabel = CustomLabel(text: "Pulse")
+    let pulseLabel = CustomLabel(text: "Pulse:")
+    let coommentLable = CustomLabel(text: "Comments:")
     
     let datePicker = UIDatePicker()
     let sysTextfield =  CustomTextField(placeholder: "Enter sys pressure here")
     let diaTextField = CustomTextField(placeholder: "Enter dia pressure here")
     let pulseTextField = CustomTextField(placeholder: "Enter pulse here")
+    let commentTextField = CustomTextField(placeholder: "Enter comment if you need it")
     
     let stackView = UIStackView()
     let doneButton = CustomButton(bgColor: UIColor(red: 83/255, green: 232/255, blue: 97/255, alpha: 1), text: "Done")
     let cancelButton = CustomButton(bgColor: UIColor(red: 83/255, green: 126/255, blue: 221/255, alpha: 1), text: "Cancel")
+    let okButton = CustomButton(bgColor: UIColor(red: 83/255, green: 126/255, blue: 221/255, alpha: 1), text: "OK")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,7 +105,14 @@ class AddViewController: UIViewController {
         doneButton.addTarget(self, action: #selector(didDoneTap), for: .touchUpInside)
     }
     
+    private func clearFields() {
+        sysTextfield.text = ""
+        diaTextField.text = ""
+        pulseTextField.text = ""
+    }
+    
     @objc func didCancelTap() {
+        clearFields()
         dismiss(animated: true)
     }
     
@@ -116,6 +126,7 @@ class AddViewController: UIViewController {
         let newRecord = Record(date: datePicker.date, sysPressure: Int(sysTextPressure), diaPressure: Int(diaTextPressure) , pulse: Int(pulseTextPressure))
         //hide modal window
         self.delegate?.addNewRecord(newRecord: newRecord)
+        clearFields()
         dismiss(animated: true)
     }
 }
