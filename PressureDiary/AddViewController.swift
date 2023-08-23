@@ -7,45 +7,68 @@
 
 import UIKit
 
+enum Type {
+    case add
+    case view
+}
+
 class AddViewController: UIViewController {
     
     weak var delegate: AddRecordDelegate?
+    var formType: Type
+    var record: RecordProtocol?
     
     let dateLabel = CustomLabel(text: "Date and time of record:")
     let sysLabel = CustomLabel(text: "SYS Pressure of blood:")
     let diaLabel = CustomLabel(text: "DIA Pressure of blood:")
     let pulseLabel = CustomLabel(text: "Pulse:")
-    let coommentLable = CustomLabel(text: "Comments:")
+    let commentLabel = CustomLabel(text: "Comment:")
     
     let datePicker = UIDatePicker()
-    let sysTextfield =  CustomTextField(placeholder: "Enter sys pressure here")
+    let sysTextField =  CustomTextField(placeholder: "Enter sys pressure here")
     let diaTextField = CustomTextField(placeholder: "Enter dia pressure here")
     let pulseTextField = CustomTextField(placeholder: "Enter pulse here")
-    let commentTextField = CustomTextField(placeholder: "Enter comment if you need it")
+    let commentTextView = CustomTextView()
     
-    let stackView = UIStackView()
-    let doneButton = CustomButton(bgColor: UIColor(red: 83/255, green: 232/255, blue: 97/255, alpha: 1), text: "Done")
-    let cancelButton = CustomButton(bgColor: UIColor(red: 83/255, green: 126/255, blue: 221/255, alpha: 1), text: "Cancel")
-    let okButton = CustomButton(bgColor: UIColor(red: 83/255, green: 126/255, blue: 221/255, alpha: 1), text: "OK")
+    init(type: Type, delegate: AddRecordDelegate?, record: RecordProtocol?) {
+        self.formType = type
+        self.delegate = delegate
+        self.record = record
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        configStackView()
-        formSetup()
-        buttonsSetup()
+        basicFormSetup()
+        switch formType {
+        case .add:
+            addFormConfig()
+        case .view:
+            viewFormConfig()
+            
+        }
     }
     
-    private func configStackView() {
-        view.addSubview(stackView)
-        self.stackView.axis = .horizontal
-        self.stackView.alignment = .center
-        self.stackView.distribution = .fillEqually
-        self.stackView.spacing = 30
-        self.stackView.addArrangedSubview(doneButton)
-        self.stackView.addArrangedSubview(cancelButton)
+    private func addFormConfig() {
+        let stackView = UIStackView()
+        let doneButton = CustomButton(bgColor: UIColor(red: 83/255, green: 232/255, blue: 97/255, alpha: 1), text: "Done")
+        let cancelButton = CustomButton(bgColor: UIColor(red: 83/255, green: 126/255, blue: 221/255, alpha: 1), text: "Cancel")
         
-        self.stackView.translatesAutoresizingMaskIntoConstraints = false
+        //MARK: - ConfigStackView
+        view.addSubview(stackView)
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        stackView.spacing = 30
+        stackView.addArrangedSubview(doneButton)
+        stackView.addArrangedSubview(cancelButton)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -53,18 +76,55 @@ class AddViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
             stackView.heightAnchor.constraint(equalToConstant: 50)
         ])
+        //MARK: - Config Buttons
+        cancelButton.addTarget(self, action: #selector(didCancelTap), for: .touchUpInside)
+        doneButton.addTarget(self, action: #selector(didDoneTap), for: .touchUpInside)
     }
     
-    private func formSetup() {
+    private func viewFormConfig() {
+        [
+            datePicker,
+            sysTextField,
+            diaTextField,
+            pulseTextField
+        ].forEach {
+            $0.isEnabled = false
+        }
+        commentTextView.isEditable = false
+        
+        guard let recordDate = record?.date else {return}
+        datePicker.date = recordDate
+        guard let recordSys = record?.sysPressure else {return}
+        sysTextField.text = "\(recordSys)"
+        guard let recordDia = record?.diaPressure else {return}
+        diaTextField.text = "\(recordDia)"
+        guard let recordPulse = record?.pulse else {return}
+        pulseTextField.text = "\(recordPulse)"
+        guard let recordComment = record?.comment else {return}
+        commentTextView.text = "\(recordComment)"
+        
+        let okButton = CustomButton(bgColor: UIColor(red: 83/255, green: 126/255, blue: 221/255, alpha: 1), text: "OK")
+        view.addSubview(okButton)
+        NSLayoutConstraint.activate([
+            okButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
+            okButton.widthAnchor.constraint(equalToConstant: 150),
+            okButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+        ])
+        okButton.addTarget(self, action: #selector(didCancelTap), for: .touchUpInside)
+    }
+    
+    private func basicFormSetup() {
         [
             dateLabel, datePicker,
-            sysLabel, sysTextfield,
+            sysLabel, sysTextField,
             diaLabel, diaTextField,
-            pulseLabel, pulseTextField
+            pulseLabel, pulseTextField,
+            commentLabel, commentTextView
         ].forEach {
             view.addSubview($0)
         }
         datePicker.translatesAutoresizingMaskIntoConstraints = false
+        commentTextView.translatesAutoresizingMaskIntoConstraints = false
 
         datePicker.datePickerMode = .dateAndTime
         datePicker.date = Date()
@@ -80,11 +140,11 @@ class AddViewController: UIViewController {
             sysLabel.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 40),
             sysLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-            sysTextfield.topAnchor.constraint(equalTo: sysLabel.bottomAnchor, constant: 10),
-            sysTextfield.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            sysTextfield.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            sysTextField.topAnchor.constraint(equalTo: sysLabel.bottomAnchor, constant: 10),
+            sysTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            sysTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
-            diaLabel.topAnchor.constraint(equalTo: sysTextfield.bottomAnchor, constant: 40),
+            diaLabel.topAnchor.constraint(equalTo: sysTextField.bottomAnchor, constant: 40),
             diaLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
             diaTextField.topAnchor.constraint(equalTo: diaLabel.bottomAnchor, constant: 10),
@@ -96,19 +156,23 @@ class AddViewController: UIViewController {
 
             pulseTextField.topAnchor.constraint(equalTo: pulseLabel.bottomAnchor, constant: 10),
             pulseTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            pulseTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            pulseTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            commentLabel.topAnchor.constraint(equalTo: pulseTextField.bottomAnchor, constant: 40),
+            commentLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            commentTextView.topAnchor.constraint(equalTo: commentLabel.bottomAnchor, constant: 10),
+            commentTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            commentTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            commentTextView.heightAnchor.constraint(equalToConstant: 70)
         ])
     }
     
-    private func buttonsSetup() {
-        cancelButton.addTarget(self, action: #selector(didCancelTap), for: .touchUpInside)
-        doneButton.addTarget(self, action: #selector(didDoneTap), for: .touchUpInside)
-    }
-    
     private func clearFields() {
-        sysTextfield.text = ""
+        sysTextField.text = ""
         diaTextField.text = ""
         pulseTextField.text = ""
+        commentTextView.text = ""
     }
     
     @objc func didCancelTap() {
@@ -119,12 +183,12 @@ class AddViewController: UIViewController {
     @objc func didDoneTap() {
         //checkData
         //saveData
-        guard let sysTextPressure = sysTextfield.text else {return}
+        guard let sysTextPressure = sysTextField.text else {return}
         guard let diaTextPressure = diaTextField.text else {return}
         guard let pulseTextPressure = pulseTextField.text else {return}
+        guard let commentTextPressure = commentTextView.text else {return}
         
-        let newRecord = Record(date: datePicker.date, sysPressure: Int(sysTextPressure), diaPressure: Int(diaTextPressure) , pulse: Int(pulseTextPressure))
-        //hide modal window
+        let newRecord = Record(date: datePicker.date, sysPressure: Int(sysTextPressure), diaPressure: Int(diaTextPressure) , pulse: Int(pulseTextPressure), comment: commentTextPressure)
         self.delegate?.addNewRecord(newRecord: newRecord)
         clearFields()
         dismiss(animated: true)

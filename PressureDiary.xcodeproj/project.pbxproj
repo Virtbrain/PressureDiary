@@ -21,6 +21,7 @@
 		14AA2E722A928156008DCAEE /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E712A928156008DCAEE /* CustomLabel.swift */; };
 		14AA2E742A93557A008DCAEE /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E732A93557A008DCAEE /* CustomButton.swift */; };
 		14AA2E762A93B613008DCAEE /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E752A93B613008DCAEE /* MockData.swift */; };
+		14AA2E7A2A96784D008DCAEE /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2E792A96784D008DCAEE /* CustomTextView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		14AA2E712A928156008DCAEE /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		14AA2E732A93557A008DCAEE /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		14AA2E752A93B613008DCAEE /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		14AA2E792A96784D008DCAEE /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +75,9 @@
 		14AA2E4B2A8F786A008DCAEE /* PressureDiary */ = {
 			isa = PBXGroup;
 			children = (
-				14AA2E702A92813D008DCAEE /* UIComponents */,
-				14AA2E622A8F7D2C008DCAEE /* Resources */,
 				14AA2E612A8F7D14008DCAEE /* Application */,
+				14AA2E622A8F7D2C008DCAEE /* Resources */,
+				14AA2E702A92813D008DCAEE /* UIComponents */,
 				14AA2E632A8F7F28008DCAEE /* Model */,
 				14AA2E502A8F786A008DCAEE /* ViewController.swift */,
 				14AA2E6C2A91FF84008DCAEE /* AddViewController.swift */,
@@ -121,6 +123,7 @@
 				14AA2E6E2A927E32008DCAEE /* CustomTextField.swift */,
 				14AA2E712A928156008DCAEE /* CustomLabel.swift */,
 				14AA2E732A93557A008DCAEE /* CustomButton.swift */,
+				14AA2E792A96784D008DCAEE /* CustomTextView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14AA2E7A2A96784D008DCAEE /* CustomTextView.swift in Sources */,
 				14AA2E512A8F786A008DCAEE /* ViewController.swift in Sources */,
 				14AA2E762A93B613008DCAEE /* MockData.swift in Sources */,
 				14AA2E722A928156008DCAEE /* CustomLabel.swift in Sources */,

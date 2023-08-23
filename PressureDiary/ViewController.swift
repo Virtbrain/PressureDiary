@@ -16,7 +16,6 @@ class ViewController: UIViewController {
     let toolbar = UIToolbar()
     let addButton = UIBarButtonItem()
     let model = Records()
-    let addScreen = AddViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +53,7 @@ class ViewController: UIViewController {
     }
     
     @objc func showNewReocordScreen() {
-        addScreen.delegate = self
+        let addScreen = AddViewController(type: .add, delegate: self, record: nil)
         present(addScreen, animated: true)
     }
 }
@@ -87,6 +86,7 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let addScreen = AddViewController(type: .view, delegate: self, record: model.getRecord(index: indexPath.row))
         present(addScreen, animated: true)
     }
 }

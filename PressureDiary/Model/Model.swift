@@ -11,7 +11,7 @@ protocol RecordProtocol {
     var sysPressure: Int? {set get}
     var diaPressure: Int? {set get}
     var pulse: Int? {set get}
-    var Comment: String? {set get}
+    var comment: String? {set get}
 }
 
 struct Record: RecordProtocol {
@@ -19,7 +19,7 @@ struct Record: RecordProtocol {
     var sysPressure: Int?
     var diaPressure: Int?
     var pulse: Int?
-    var Comment: String?
+    var comment: String?
 }
 
 class Records {
@@ -29,6 +29,10 @@ class Records {
     func addRecord(newRecord: RecordProtocol) {
         activeRecords.append(newRecord)
 //        self.saveRecords()
+    }
+    
+    func getRecord(index: Int) -> RecordProtocol {
+        return activeRecords[index]
     }
     
     func removeRecord(recordIndex: Int) {
