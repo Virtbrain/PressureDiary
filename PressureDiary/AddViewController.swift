@@ -29,6 +29,7 @@ class AddViewController: UIViewController {
     let diaTextField = CustomTextField(placeholder: "Enter dia pressure here")
     let pulseTextField = CustomTextField(placeholder: "Enter pulse here")
     let commentTextView = CustomTextView()
+    let scrollView = UIScrollView()
     
     init(type: Type, delegate: AddRecordDelegate?, record: RecordProtocol?) {
         self.formType = type
@@ -43,7 +44,9 @@ class AddViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(scrollView)
         view.backgroundColor = .white
+        view.keyboardLayoutGuide.followsUndockedKeyboard = true //Mark1
         basicFormSetup()
         switch formType {
         case .add:
@@ -52,6 +55,28 @@ class AddViewController: UIViewController {
             viewFormConfig()
             
         }
+    }
+    
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(kbWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(kbWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func removeKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func kbWillShow(_ notification: Notification) {
+        let userInfo = notification.userInfo
+        let kbFrameSize = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        scrollView.contentOffset = CGPoint(x: 0, y: kbFrameSize.height)
+        print("kbIsShowed")
+    }
+    
+    @objc func kbWillHide() {
+        scrollView.contentOffset = CGPoint.zero
+        print("kbIsHided")
     }
     
     private func addFormConfig() {
@@ -63,6 +88,7 @@ class AddViewController: UIViewController {
         view.addSubview(stackView)
         stackView.axis = .horizontal
         stackView.alignment = .center
+        stackView.backgroundColor = .orange
         stackView.distribution = .fillEqually
         stackView.spacing = 30
         stackView.addArrangedSubview(doneButton)
@@ -71,10 +97,11 @@ class AddViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            stackView.topAnchor.constraint(equalTo: commentTextView.bottomAnchor, constant: 50),
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
-            stackView.heightAnchor.constraint(equalToConstant: 50)
+//            stackView.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -10)
+//            view.keyboardLayoutGuide.topAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 1.0)
         ])
         //MARK: - Config Buttons
         cancelButton.addTarget(self, action: #selector(didCancelTap), for: .touchUpInside)
